@@ -26,12 +26,16 @@
 #include <time.h>
 #include <stdlib.h>
 
+typedef struct temp{
+		int x,y;
+		struct temp *prox,*ant;
+		_Bool simetrico;
+	}Par;
+
 int aleatorio(int min,int max){
-		int r;
-		r = rand();
-		r = r % max;
-		if(r < min)
-		r += min;
+		int r,dif;
+		dif = max - min;
+		r = min + (rand()%dif);
 		return r;
 	}
 
@@ -42,15 +46,16 @@ int main()
 	scanf("%d",&m);
 	printf("Informe o numero maximo:");
 	scanf("%d",&n);
-	printf("Informe o numero de coordenadas a serem geradas: ");
+	printf("Informe o numero de elementos a serem gerados: ");
 	scanf("%d",&q);
 	for(i=0;i<q;i++){
-	srand(time(NULL));
-	num1 = aleatorio(m,n);
-	sleep(1);
-	num2 = aleatorio(m,n);
-	printf("\nNum1 = %d\nNum2 = %d\n",num1,num2);
-}
+		srand(time(NULL));
+		num1 = aleatorio(m,n);
+		sleep(1);
+		num2 = aleatorio(m,n);
+		printf("\nNum1 = %d\nNum2 = %d\n",num1,num2);
+	}
+
 	return 0;
 }
 
