@@ -44,6 +44,7 @@ Par *criar(int x,int y){
 		Par *novo = (Par *)malloc(sizeof(Par));
 		novo->x = x;
 		novo->y =y;
+		novo->simetrico = 0;
 		novo->prox = novo->ant = NULL;
 		return novo;
 	}
