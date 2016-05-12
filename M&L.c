@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <math.h>
 
 typedef struct temp{
 		int x,y;
@@ -162,7 +161,7 @@ int main()
 			if(n-m > 0){ //verifica se o intervalo contém algum elemento
 				printf("Informe o numero de elementos a serem gerados: ");
 				scanf("%d",&q);
-				if(pow((n-m),2) >= q){ //verifica se o numero de pares a serem gerados é menor ou igual aos pares disponiveis no intervalo
+				if(((n-m)*(n-m)) >= q){ //verifica se o numero de pares a serem gerados é menor ou igual aos pares disponiveis no intervalo
 					srand(time(NULL)); //inicializar a função rand -> seed rand
 					for(i=0;i<q;i++){ //repete as instruções abaixo por q vezes, definido pelo usuário
 						sleep(0.5);
