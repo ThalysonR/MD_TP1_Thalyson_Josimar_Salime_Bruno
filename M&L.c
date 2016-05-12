@@ -163,21 +163,21 @@ int main()
 				printf("Informe o numero de elementos a serem gerados: ");
 				scanf("%d",&q);
 				if(pow(2,(n-m)) >= q){ //verifica se o numero de pares a serem gerados é menor ou igual aos pares disponiveis no intervalo
-					printf("Aguarde");
+					srand(time(NULL)); //inicializar a função rand -> seed rand
 					for(i=0;i<q;i++){ //repete as instruções abaixo por q vezes, definido pelo usuário
-						srand(time(NULL)); //inicializar a função rand -> seed rand
+						sleep(0.5);
 						x = aleatorio(m,n); //criar um numero aleatório, entre m e n, definidos pelo usuário.
-						sleep(1);
+						sleep(0.5);
 						y = aleatorio(m,n);
 						if(!(repetido(inicio,x,y))){ //inserir os elementos enquanto não há pares repetidos
 							inserir(&inicio,&fim,x,y); //insere o par em uma estrutura dinâmica
-							printf(".");
 						}else{
 							i--; //retroceder no loop for e gerar novo par, caso haja um par repetido
 						}
 					}
 					printf("Lista:");
 					imprimir(inicio); //imprime todos os pares ordenados
+					//Arvore \/
 					Par *aux = inicio;
 					Arv *inicioArv = NULL;
 					while(aux != NULL){
