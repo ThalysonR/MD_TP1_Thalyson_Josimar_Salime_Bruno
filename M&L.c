@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <conio.h>
 
 typedef struct temp{
 		int x,y;
@@ -118,18 +119,17 @@ void inserirArv(Arv **inicio,int x,int y){
 
 void imprimir(Par *inicio){
 		Par *aux = inicio;
-		printf("\n{");
+		//printf("\n");
 		while(aux != NULL){
-			printf("(%d,%d)",aux->x,aux->y);
+			printf("(%d,%d)\n",aux->x,aux->y);
 			aux = aux->prox;
 		}
-		printf("}\n");
 	}
 
 void imprimirArv(Arv *no){
 		if(no->esq != NULL)
 		imprimirArv(no->esq);
-		printf("(%d,%d)",no->x,no->y);
+		printf("(%d,%d)\n",no->x,no->y);
 		if(no->dir != NULL)
 		imprimirArv(no->dir);
 	}
@@ -147,10 +147,51 @@ _Bool repetido(Par *inicio,int x,int y){
 		return rep;
 	}
 
+void VerifSimet(Par *lista){
+		Par *aux;
+		while(lista != NULL){
+			aux = lista;
+			while(aux != NULL){
+				if(lista->x == aux->y && lista->y == aux->x){
+					lista->simetrico = aux->simetrico = 1;
+					break;
+				}
+				aux = aux->prox;
+			}
+			lista = lista->prox;
+		}
+	}
+
+_Bool Simetrico(Par *lista){
+		_Bool status = 1;
+		VerifSimet(lista);
+		while(lista != NULL){
+			if(lista->simetrico == 0){
+				status = 0;
+				break;
+			}
+			lista = lista->prox;
+		}
+		return status;
+	}
+
+void transferir(Par *lista,Arv **inicio){
+		while(lista != NULL){
+			Par *aux = lista;
+			lista = lista->prox;
+			inserirArv(inicio,aux->x,aux->y);
+			if(!(aux->simetrico))
+			inserirArv(inicio,aux->y,aux->x);
+			free(aux);
+		}
+	}
+
 int main()
 {
 	int m,n,q,x,y,i;
 	Par *inicio = NULL,*fim;
+	Arv *inicioArv = NULL;
+	_Bool simetria;
 	printf("Informe numero minimo:");
 	scanf("%d",&m);
 	if(m >= 0){ //verifica se o numero minimo é positivo
@@ -164,9 +205,7 @@ int main()
 				if(((n-m)*(n-m)) >= q){ //verifica se o numero de pares a serem gerados é menor ou igual aos pares disponiveis no intervalo
 					srand(time(NULL)); //inicializar a função rand -> seed rand
 					for(i=0;i<q;i++){ //repete as instruções abaixo por q vezes, definido pelo usuário
-						sleep(0.5);
 						x = aleatorio(m,n); //criar um numero aleatório, entre m e n, definidos pelo usuário.
-						sleep(0.5);
 						y = aleatorio(m,n);
 						if(!(repetido(inicio,x,y))){ //inserir os elementos enquanto não há pares repetidos
 							inserir(&inicio,&fim,x,y); //insere o par em uma estrutura dinâmica
@@ -174,17 +213,14 @@ int main()
 							i--; //retroceder no loop for e gerar novo par, caso haja um par repetido
 						}
 					}
-					printf("Lista:");
 					imprimir(inicio); //imprime todos os pares ordenados
-					//Arvore \/
-					Par *aux = inicio;
-					Arv *inicioArv = NULL;
-					while(aux != NULL){
-						inserirArv(&inicioArv,aux->x,aux->y);
-						aux = aux->prox;
+					simetria = Simetrico(inicio);
+					printf("%d\n",simetria);
+					if(!(simetria)){
+						getch();
+						transferir(inicio,&inicioArv);
+						imprimirArv(inicioArv);
 					}
-					printf("Arvore:\n");
-					imprimirArv(inicioArv);
 				}else{
 					printf("Nao existem pares suficientes no intervalo escolhido.\n");
 				}
