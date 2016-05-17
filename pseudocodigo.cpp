@@ -27,7 +27,7 @@ inicioArv:>Arv;
 		r,dif:inteiro;
 		dif<-max-min;
 		r<- min+(rand()%dif);
-		return r;
+		returne r;
 		
 	fimfuncao
 	
@@ -38,21 +38,21 @@ inicioArv:>Arv;
 		novo.esq<-novo.dir;
 		retorne novo;
 		
-	fim funcao
+	fimfuncao
 	
 	funcao criarArv(x,y:inteiro):>Arv
 		novo->x=x;
 		novo->y=y;
 		novo->esq=novo->dir;
 		novo->simetrico=0;
-		return novo;
+		returne novo;
 	fimfuncao
 	
 	funcao inserir(inicio,fim:Par;x,y:inteiro):
 		variavel 
 		novo:>Par;
 			se(inicio=Nulo)Entao
-				inici=fim=criar(x,y);
+				inicio=fim=criar(x,y);
 			senao
 				novo<-criar(x,y);
 				fim.prox<-novo;
@@ -64,6 +64,7 @@ inicioArv:>Arv;
 		inserirArv(inicio:>Arv;x,y:inteiro):
 			novo,aux:>Par;
 			ocupado:>logico;
+			
 			se(inicio=Nulo)Entao
 				inicio<-criar(x,y);
 			senao
@@ -122,7 +123,8 @@ inicioArv:>Arv;
 					fimse
 				fimenquanto
 			returne rep;
-			fimfuncao
+		fimfuncao
+			
 		verifSimet(lista:>Par)
 			aux:>Par;
 			enquanto(lista<>Nulo)entao:
@@ -158,7 +160,7 @@ inicioArv:>Arv;
 					inserirArv(inicio,aux.x,aux.y);
 				se((aux.simetrico)<>1)
 					inserirArv(inicio,aux->y,aux->x);
-					free(aux);
+				
 				fimse
 			fimenquanto	
 		fimfuncao
@@ -179,16 +181,16 @@ inicioArv:>Arv;
 					se(((n-m)*(n-m))>=q)entao
 							srand(time(NULL));
 						para(i=0 ate q passo p)	faca
-								x <-aleatorio(m,n); //criar um numero aleatório, entre m e n, definidos pelo usuário.
+								x <-aleatorio(m,n); 
 								y <- aleatorio(m,n);
-							se((repetido(inicio,x,y))<>1) //inserir os elementos enquanto não há pares repetidos
-								inserir(&inicio,&fim,x,y); //insere o par em uma estrutura dinâmica
+							se((repetido(inicio,x,y))<>1) 
+								inserir(&inicio,&fim,x,y); 
 							senao
-								i<-i-1; //retroceder no loop for e gerar novo par, caso haja um par repetido
+								i<- i-1; 
 							fimse
 						fimpara	
 					
-						imprimir(inicio); //imprime todos os pares ordenados
+						imprimir(inicio); 
 						simetria <- Simetrico(inicio);
 						escreva(simetria);
 						se((simetria)<>1)entao
@@ -196,16 +198,16 @@ inicioArv:>Arv;
 							imprimirArv(inicioArv);
 						fimse
 				    senao
-						printf("Nao existem pares suficientes no intervalo escolhido.\n");
+						escreva("Nao existem pares suficientes no intervalo escolhido.");
 					fimse
 				senao
-					printf("Intervalo Invalido.\n");
+					escreva("Intervalo Invalido.");
 				fimse
 		 senao
-			printf("Limite superior maximo: 100\n");
+			escreva("Limite superior maximo: 100");
 		 fimse
 	senao
-		printf("Numero Invalido.\n");
+		escreva("Numero Invalido.");
 	fimse
 	
 fimalgoritmo
